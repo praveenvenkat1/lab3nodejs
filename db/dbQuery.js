@@ -3,8 +3,8 @@ const databasename = "sales";
 
 var pool = mysql.createPool({
     connectionLimit: 100,
-    host: "127.0.0.1",
-    user: "root@localhost",
+    host: 'localhost',
+    user: "root",
     password: "",
     database: "sales",
     debug: true
