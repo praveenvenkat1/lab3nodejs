@@ -1,5 +1,6 @@
 const express = require('express');
 
+
 //creating app
 const app = express();
 
@@ -21,8 +22,13 @@ app.get('/contacts', (req, res) => {
     res.render('contacts'); 
    });
 
+//route for contacts
+app.get('/catalogue', (req, res) => {
+    res.render('catalogue'); 
+   });
+
 //pass requests to the router middleware
-const router = require('./routes/post');
+const router = require('./routes/apis');
 app.use(router);
 
 //make the app listen on port 
