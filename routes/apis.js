@@ -18,5 +18,7 @@ router.post('/api/register', clientController.registerControl);
 //route for login
 router.post('/api/login', clientController.loginControl);
 
+router.get('/api/clients', clientController.loginControl);
+
 //export router
 module.exports = router;

@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 
 
 //creating app
@@ -6,9 +7,11 @@ const app = express();
 
 //send an HTTP response when receiving HTTP GET /
 app.use(express.static('public'));
+/*
 app.get('/', (req, res) => {
     res.sendFile("public/index.html",{root: __dirname});
 });
+*/
 
 
 //handling static HTML and EJS templates
@@ -17,15 +20,30 @@ app.get('/', (req, res) => {
     res.render('index'); //no need for ejs extension
 });
 
+//login and registration segment (post)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'test1',
+    resave: true,
+    saveUninitialized: true
+}));
+
+
+app.get('/login', (req, res) => {
+    res.render('login'); 
+});
+
+app.get('/register', (req, res) => {
+    res.render('register'); 
+});
+
 //route for contacts
 app.get('/contacts', (req, res) => {
     res.render('contacts'); 
    });
 
-//route for contacts
-app.get('/catalogue', (req, res) => {
-    res.render('catalogue'); 
-   });
+
 
 //pass requests to the router middleware
 const router = require('./routes/apis');

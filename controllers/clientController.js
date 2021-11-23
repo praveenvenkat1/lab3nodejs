@@ -1,11 +1,14 @@
+const { Client } = require("../models/entities");
+
 const loginControl = (request, response) => {
     const clientServices = require('../services/clientServices');
 
     let username = request.body.username;
     let password = request.body.password;
     if (!username || !password) {
-        response.send('login failed');
-        response.end();
+        response.render("loginRes", {
+            result: "Please type in a valid username or password",
+          });
     } else {
         if (request.session && request.session.user) {
             response.send("Already logged in");
