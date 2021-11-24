@@ -1,4 +1,4 @@
-const getCatalogue = (request, response) => {  //gets products in catalog
+const getCatalogue = (request, response) => {  //gets products in catalogue
     const catalogServices = require('../services/productServices');
     catalogServices.searchService(function(err, rows) {
         response.render('catalogue', { products: rows });
@@ -9,7 +9,7 @@ const getProductByID = (request, response) => {
     const catalogServices = require('../services/productServices');
     let reference = request.params.id;
     catalogServices.searchIDService(reference, function(err, rows) {
-        response.render('article', { products: rows });
+        response.render('article', { product: rows });
     });  //sends data to ejs
 };
 

@@ -9,25 +9,29 @@ const loginControl = (request, response) => {
         response.render("loginRes", {
             result: "Please type in a valid username or password",
           });
-    } else {
+    } else { //test
         if (request.session && request.session.user) {
-            response.send("Already logged in");
-            response.end();
+            response.render("loginRes", {
+                result: "Already logged in.",
+              });
         } else {
             clientServices.loginService(username, password, function(err, dberr, client) {
                 console.log("Client from login service :" + JSON.stringify(client));
                 if (client === null) {
-                    console.log("Auhtentication problem!");
-                    response.send('login failed'); //invite to register
-                    response.end();
+                    console.log("Authentication problem!");
+                    response.render("loginRes", {
+                        result: "Log-in failed!",
+                      });//invite to register
                 } else {
                     console.log("User from login service :" + client[0].num_client);
                     //add to session
                     request.session.user = username;
                     request.session.num_client = client[0].num_client;
                     request.session.admin = false;
-                    response.send(`Login (${username}, ID.${client[0].num_client}) successful!`);
-                    response.end();
+                    response.render("loginRes", {
+                        result: `Login (${username}, ID.${client[0].num_client}) successful!`,
+                      });
+
                 }
             });
         }
@@ -54,11 +58,16 @@ const registerControl = (request, response) => {
         console.log("User from register service :" + insertedID);
         if (exists) {
             console.log("Username taken!");
-            response.send(`registration failed. Username (${username}) already taken!`); //invite to register
+            response.render("registerRes", {
+                result: `Registration failed. Username (${username}) is already taken!`,
+              });
+             //invite to register
         } else {
             client.num_client = insertedID;
             console.log(`Registration (${username}, ${insertedID}) successful!`);
-            response.send(`Successful registration ${client.contact} (ID.${client.num_client})!`);
+            response.render("loginRes", {
+                result: `Successful registration ${client.contact} (ID.${client.num_client})!`,
+              });
         }
         response.end();
     });
